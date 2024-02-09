@@ -2,9 +2,9 @@ from django.shortcuts import render,redirect
 from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
 from django.views import View
-from django.http import HttpResponse
+from django.http import HttpResponse,JsonResponse
 from django.contrib.auth.models import User
-from .models import Session
+from .models import Session,Record
 
 
 class UserLogin(LoginView):
@@ -13,8 +13,9 @@ class UserLogin(LoginView):
 
 class Base_view(View):
     def get(self,request):
+        sessions = Session.objects.all()
         template_name = 'welcome.html'
-        return render(request,template_name)
+        return render(request,template_name,{"sessions":sessions})
 
 
 def login_redirector(request,*args,**kwargs):
@@ -24,13 +25,24 @@ def login_redirector(request,*args,**kwargs):
         return redirect('login')
 
 
-def session_create_view(request,*args,**kwargs):
+def create_Session(request,*args,**kwargs):
+    if request.method == "GET":
+        return render(request,'sessionform.html')
     if request.method == 'POST':
-        sub = request.foem('subject')
+        sub = request.POST.get('subject')
 
-        obj = Sessio.objects.create(subject = sub)
+        obj = Session.objects.create(subject = sub)
         obj.save()
         redirect_key = obj.key
-
-        return redirect('')
+        print(obj.key)
+        #return JsonResponse('ok',safe=False,status=200)
+        return redirect('home')
         
+
+
+def session_view(request,*args,**kwargs):
+    key = kwargs.get('pk')
+
+    session = Session.objects.get(key=key)
+    result_data = Record.objects.filter(session=session)
+    return render(request,'session.html',{'session':session,'result_data':result_data})

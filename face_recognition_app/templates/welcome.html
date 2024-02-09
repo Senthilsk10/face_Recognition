@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block jsscript %}
+<style>
+  
+
+  @media (max-width: 767px) {
+      .card-title,
+      .card-text {
+          font-size: 80%; 
+      }
+
+      .btn {
+          font-size: 70%;
+      }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+
+    <div class="container-fluid">
+        <div class="container text-center">
+            <div class="container bg-light my-3">
+                <h6 class="font-monospace text-center fw-bolder">Here are the sessions created so far..</h6>
+            </div>
+            <hr class = "shadow my-4">
+            <div class ="container mt-3 p-2 text-center ">
+                <div class="card shadow-sm mx-1">
+                  <div class="card-body">
+                    <h5 class="card-title">Start a new session</h5>
+                    <p class="card-text">Click below to start a new session</p>
+                    <a href="{% url 'create_Session' %}" class="btn btn-light shadow-sm border-light">Add a session</a>
+                  </div>
+                </div>
+              </div>
+            <hr class = "shadow my-4">
+            <div class="container my-3">
+                <div class="row">
+                    {% for session in sessions %}
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="card mt-2 mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">subject : {{session.subject}}</h5>
+                                <p class="card-text">session created at : {{ session.date}}</p>
+                            </div>
+                            <div class="card-body text-right">
+                                <a class="btn btn-light" href="{% url 'session_view' pk=session.key %}">Visit session</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>    
+                  </div>
+        </div>
+    </div>
+
+
+{% endblock %}

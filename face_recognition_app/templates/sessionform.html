@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="container">
+            <form method="post" action="{% url 'create_Session' %}" class="form-signin p-2">
+                {% csrf_token %}
+                <div class="form-group my-3">
+                    <label class="sr-only my-2 fw-bold font-serif">select one of the Subjects:</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="subject" id="subject1" value="Discrete mathematics">
+                        <label class="form-check-label" for="subject1">
+                            Discrete mathematics
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="subject" id="subject2" value="computer architecture and organisation">
+                        <label class="form-check-label" for="subject2">
+                            Computer architecture and organisation
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="subject" id="subject3" value="operating system">
+                        <label class="form-check-label" for="subject3">
+                            Operating system
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="subject" id="subject4" value="graphics and multimdeia">
+                        <label class="form-check-label" for="subject4">
+                            Graphics and multimedia
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="subject" id="subject5" value="computer networking">
+                        <label class="form-check-label" for="subject5">
+                            Computer networking
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="subject" id="subject6" value="python">
+                        <label class="form-check-label" for="subject6">
+                            Python
+                        </label>
+                    </div>
+                </div>
+                <input type="submit" value="Submit" class="btn btn-light shadow-sm btn-lg btn-block mt-4 mb-4">
+            </form>
+            
+        </div>
+
+    </div>
+
+
+{% endblock %}

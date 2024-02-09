@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+
+{% block jsscript %}
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" /> 
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+{% endblock %}
+
+
+{% block content %}
+    
+    <div class ="container  mr-3 mt-1 p-2  rounded">
+            
+        <div class="card-body mx-1 mt-1 shadow">
+        <h1 class="h3 mb-2 font-weight-normal card-title">Session Information</h1>
+        <hr>
+        <div class="row">
+            <div class="col-sm-3">
+            <p class="mb-0">Subject Name</p>
+            </div>
+            <div class="col-sm-9">
+            <p class="text-muted mb-0">{{session.subject}}</p>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-sm-3">
+            <p class="mb-0">Session Date</p>
+            </div>
+            <div class="col-sm-9">
+            <p class="text-muted mb-0">{{session.date}}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class = "container my-3 mx-2 p-2" id = "attendance table">
+        <div class = "mb-3">
+          <h6 class="font-weight-normal font-serif">View Recieved attendance for this session</h6>
+        </div>
+        <div id = "table-content" class = "table-responsive my-2 shadow-sm ">
+            <table id = "datatable" class = "table">
+                <thead>
+                    <tr>
+                        <th>Rollno</th>
+                        <th>Timestamp</th>
+                    </tr>
+                </thead>
+                {% for data in result_data %}
+                <tr>
+                    <td>{{data.rollno}}</td>
+                    <td>{{data.timestamp}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+      </div>
+      <script>
+        $(document).ready(function() {
+            $('#datatable').DataTable({
+            paging: true, // Enable paging
+            searching: true, // Enable searching/filtering
+            ordering: true, // Enable sorting
+            info: true // Show information
+            // Add more options as needed
+            });
+        });
+    </script>
+{% endblock %}
