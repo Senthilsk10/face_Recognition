@@ -5,7 +5,8 @@ from django.views import View
 from django.http import HttpResponse,JsonResponse
 from django.contrib.auth.models import User
 from .models import Session,Record
-
+from django.views.decorators.csrf import csrf_exempt
+import json
 
 class UserLogin(LoginView):
     success_url = reverse_lazy("home")
@@ -46,3 +47,30 @@ def session_view(request,*args,**kwargs):
     session = Session.objects.get(key=key)
     result_data = Record.objects.filter(session=session)
     return render(request,'session.html',{'session':session,'result_data':result_data})
+
+
+
+@csrf_exempt
+
+def get_result(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            key = data.get('key')
+            labels = data.get('labels', [])
+            session = Session.objects.get(key=key)
+            print("Key:", key)
+            print("Labels:", labels)
+            for label in labels:
+                if label != "unknown":
+                    exists = Record.objects.filter(rollno=label,session=session).exists()
+                    if exists:
+                        continue
+                    else:
+                        obj = Record.objects.create(rollno=label,session=session)
+                    obj.save()
+            return JsonResponse({'message': 'Data received successfully'}, status=200)
+        except json.JSONDecodeError as e:
+            return JsonResponse({'error': 'Invalid JSON data'}, status=400)
+    else:
+        return JsonResponse({'error': 'Method not allowed'}, status=405)
