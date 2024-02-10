@@ -14,11 +14,11 @@
     <div class ="container  mr-3 mt-1 p-2  rounded">
             
         <div class="card-body mx-1 mt-1 shadow">
-        <h1 class="h3 mb-2 font-weight-normal card-title">Session Information</h1>
+        <h1 class="h3 mb-2 font-weight-normal card-title font-monospace">Session Information</h1>
         <hr>
         <div class="row">
             <div class="col-sm-3">
-            <p class="mb-0">Subject Name</p>
+            <p class="mb-0 font-monospace">Subject Name</p>
             </div>
             <div class="col-sm-9">
             <p class="text-muted mb-0">{{session.subject}}</p>
@@ -27,7 +27,7 @@
         <hr>
         <div class="row">
             <div class="col-sm-3">
-            <p class="mb-0">Session Date</p>
+            <p class="mb-0 font-monospace">Session Date</p>
             </div>
             <div class="col-sm-9">
             <p class="text-muted mb-0">{{session.date}}</p>
@@ -38,15 +38,15 @@
     <div class ="container mt-3 p-2 text-center ">
         <div class="card shadow-sm mx-1">
           <div class="card-body">
-            <h5 class="card-title">Add data to the session</h5>
-            <a href="https://n5nshbrx-5500.inc1.devtunnels.ms/?key={{session.key}}" class="btn btn-light shadow-sm border-light">Upload photos</a>
+            <h5 class="card-title font-monospace">Add data to the session</h5>
+            <a href="{% url 'model_Page' %}?key={{session.key}}{{ request.GET.urlencode }}" class="btn btn-light shadow-sm border-light">Upload photos</a>
           </div>
         </div>
       </div>
       <hr>
     <div class = "container my-3 mx-1 p-2 border-dark" id = "attendance table">
         <div class = "mb-3">
-          <h6 class="font-weight-normal font-serif">View Recieved attendance for this session</h6>
+          <h6 class="font-weight-normal font-monospace">Recieved attendance of this session</h6>
         </div>
         <div id = "table-content" class = "table-responsive my-2 p-3 shadow-sm  ">
             <table id = "datatable" class = "table">

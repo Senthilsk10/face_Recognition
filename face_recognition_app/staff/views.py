@@ -7,25 +7,29 @@ from django.contrib.auth.models import User
 from .models import Session,Record
 from django.views.decorators.csrf import csrf_exempt
 import json
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+
 
 class UserLogin(LoginView):
     success_url = reverse_lazy("home")
  
 
 class Base_view(View):
+    @method_decorator(login_required)
     def get(self,request):
         sessions = Session.objects.all()
         template_name = 'welcome.html'
         return render(request,template_name,{"sessions":sessions})
 
-
+@login_required
 def login_redirector(request,*args,**kwargs):
     if request.user.is_authenticated:
         return redirect('home')
     else:
         return redirect('login')
 
-
+@login_required
 def create_Session(request,*args,**kwargs):
     if request.method == "GET":
         return render(request,'sessionform.html')
@@ -40,7 +44,7 @@ def create_Session(request,*args,**kwargs):
         return redirect('home')
         
 
-
+@method_decorator(login_required)
 def session_view(request,*args,**kwargs):
     key = kwargs.get('pk')
 
@@ -51,7 +55,7 @@ def session_view(request,*args,**kwargs):
 
 
 @csrf_exempt
-
+@login_required
 def get_result(request):
     if request.method == 'POST':
         try:
@@ -74,3 +78,9 @@ def get_result(request):
             return JsonResponse({'error': 'Invalid JSON data'}, status=400)
     else:
         return JsonResponse({'error': 'Method not allowed'}, status=405)
+
+
+@login_required
+def model_page(request,*args,**kwargs):
+
+    return render(request,'main.html')

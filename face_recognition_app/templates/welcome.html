@@ -22,15 +22,15 @@
     <div class="container-fluid">
         <div class="container text-center">
             <div class="container bg-light my-3">
-                <h6 class="font-monospace text-center fw-bolder">Here are the sessions created so far..</h6>
+                <h6 class="font-monospace text-center fw-bolder ">sessions created so far..</h6>
             </div>
             <hr class = "shadow my-4">
             <div class ="container mt-3 p-2 text-center ">
                 <div class="card shadow-sm mx-1">
                   <div class="card-body">
-                    <h5 class="card-title">Start a new session</h5>
+                    <h5 class="card-title font-monospace">Start a new session</h5>
                     <p class="card-text">Click below to start a new session</p>
-                    <a href="{% url 'create_Session' %}" class="btn btn-light shadow-sm border-light">Add a session</a>
+                    <a href="{% url 'create_Session' %}" class="btn btn-light shadow-sm border-light">Add a Session</a>
                   </div>
                 </div>
               </div>
@@ -41,11 +41,11 @@
                     <div class="col-lg-4 col-md-6 col-sm-12">
                         <div class="card mt-2 mb-3">
                             <div class="card-body">
-                                <h5 class="card-title">subject : {{session.subject}}</h5>
+                                <h5 class="card-title font-monospace">subject : {{session.subject}}</h5>
                                 <p class="card-text">session created at : {{ session.date}}</p>
                             </div>
                             <div class="card-body text-right">
-                                <a class="btn btn-light" href="{% url 'session_view' pk=session.key %}">Visit session</a>
+                                <a class="btn btn-light font-monospace" href="{% url 'session_view' pk=session.key %}">Visit</a>
                             </div>
                         </div>
                     </div>

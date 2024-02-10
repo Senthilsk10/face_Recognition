@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block jsscript %}
+<script defer src="https://cdn.rawgit.com/Senthilsk10/face-api-web/main/face-api.min.js"></script>
+  <script defer src="https://cdn.rawgit.com/Senthilsk10/face-api-web/main/script.js"></script> 
+{% endblock %}
+{% block content %}
+  <div class="container-fluid ">
+    <div class="container mt-1">
+      <p class = "text-center fw-bolder alert alert-white font-monospace text-dark">
+        Welcome to our Face Recognition system. Teachers, once the model is loaded, you can start uploading photos one by one for recognition......
+      </p>
+    </div>
+    <div class="container">
+      <div class="p-4 text-center mt-4">
+        <label class="form-label alert alert-info font-monospace">Please upload a file to send presentees</label>
+        <input class="form-control mt-3" type="file" id="imageUpload">
+      </div>
+      <div class="row text-center" >
+        <h6 class = "alert alert-success font-monospace" id = "message">
+          model have not loaded yet - plase wait few seconds
+        </h6> 
+      </div>
+    </div>
+  </div>
+  
+  {% endblock %}
