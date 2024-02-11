@@ -22,14 +22,13 @@ class Base_view(View):
         template_name = 'welcome.html'
         return render(request,template_name,{"sessions":sessions})
 
-@login_required
+
 def login_redirector(request,*args,**kwargs):
     if request.user.is_authenticated:
         return redirect('home')
     else:
         return redirect('login')
 
-@login_required
 def create_Session(request,*args,**kwargs):
     if request.method == "GET":
         return render(request,'sessionform.html')
@@ -44,7 +43,7 @@ def create_Session(request,*args,**kwargs):
         return redirect('home')
         
 
-@method_decorator(login_required)
+
 def session_view(request,*args,**kwargs):
     key = kwargs.get('pk')
 
@@ -55,7 +54,6 @@ def session_view(request,*args,**kwargs):
 
 
 @csrf_exempt
-@login_required
 def get_result(request):
     if request.method == 'POST':
         try:
@@ -80,7 +78,6 @@ def get_result(request):
         return JsonResponse({'error': 'Method not allowed'}, status=405)
 
 
-@login_required
 def model_page(request,*args,**kwargs):
 
     return render(request,'main.html')
