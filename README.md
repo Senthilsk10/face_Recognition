@@ -15,6 +15,7 @@ This project aims to provide a solution for attendance tracking in educational i
 ## Technologies Used
 - JavaScript
 - HTML/CSS
+- Django
 - [FaceAPI.js](https://github.com/justadudewhohacks/face-api.js/)
 - Mobile device camera for image capture
 
