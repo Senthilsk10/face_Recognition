@@ -1,4 +1,3 @@
-Sure! Below is a sample README file for your project that describes how to use facial recognition with FaceAPI.js for attendance tracking using mobile phones. 
 
 ---
 
