@@ -49,7 +49,7 @@ def session_view(request,*args,**kwargs):
 
     session = Session.objects.get(key=key)
     result_data = Record.objects.filter(session=session)
-    return render(request,'session.html',{'session':session,'result_data':result_data})
+    return render(request,'session.html',{'session':session,'result_data':result_data,"key":key})
 
 
 
@@ -80,4 +80,4 @@ def get_result(request):
 
 def model_page(request,*args,**kwargs):
 
-    return render(request,'main.html')
+    return render(request,'main.html',{"key":request.GET.get('key')})

@@ -2,14 +2,19 @@
 
 {% block jsscript %}
 <script defer src="https://cdn.rawgit.com/Senthilsk10/face-api-web/main/face-api.min.js"></script>
-  <script defer src="https://tqxyccokzhewwreimtyj.supabase.co/storage/v1/object/public/storage/faceapi.js?t=2024-04-28T12%3A36%3A48.537Z"></script> 
+  <script defer src="https://senthilsk10.github.io/my-academic-files/faceapi.js"></script> 
 {% endblock %}
+{% block login %}
+<a class = "btn btn-light shadow-md border-dark" href="{% url 'session_view' pk=key %}">Back</a>
+{% endblock login %}
+
 {% block content %}
+
   <div class="container-fluid ">
     <div class="container mt-1">
-      <p class = "text-center fw-bolder alert alert-white font-monospace text-dark">
-        Welcome to our Face Recognition system. Teachers, once the model is loaded, you can start uploading photos one by one for recognition......
-      </p>
+            <p class = "text-center fw-bolder alert alert-white font-monospace text-dark">
+              Welcome to our Face Recognition system. Teachers, once the model is loaded, you can start uploading photos one by one for recognition......
+            </p>
     </div>
     <div class="container">
       <div class="p-4 text-center mt-4">

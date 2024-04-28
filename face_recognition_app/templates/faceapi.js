@@ -7,38 +7,29 @@ Promise.all([
 ]).then(start)
 
 async function start() {
-  const container = document.createElement('div')
-  container.style.position = 'relative'
-  document.body.append(container)
-  const labeledFaceDescriptors = await loadLabeledImages()
-  const faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptors, 0.6)
-  let image
-  let canvas
-  console.log('loaded');
-  message.innerText = "Model loaded now you can start upload photos";
-  //document.body.append('Loaded')
-  imageUpload.addEventListener('change', async () => {
-    if (image) image.remove()
-    if (canvas) canvas.remove()
-    image = await faceapi.bufferToImage(imageUpload.files[0])
-    //container.append(image)
-    canvas = faceapi.createCanvasFromMedia(image)
-    //container.append(canvas)
-    const displaySize = { width: image.width, height: image.height }
-    faceapi.matchDimensions(canvas, displaySize)
-    const detections = await faceapi.detectAllFaces(image).withFaceLandmarks().withFaceDescriptors()
-    const resizedDetections = faceapi.resizeResults(detections, displaySize)
-    const results = resizedDetections.map(d => faceMatcher.findBestMatch(d.descriptor))
-    const queryParams = getQueryParams(queryString);
-    const key = queryParams['key'];
-    postData(results,key)
-    //results.forEach((result, i) => {
-    //  const box = resizedDetections[i].detection.box
-    //  const drawBox = new faceapi.draw.DrawBox(box, { label: result.toString() })
-    //  drawBox.draw(canvas)
-    //})
-  })
+    const labeledFaceDescriptors = await loadLabeledImages()
+    const faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptors, 0.6)
+    let image
+
+    message.innerText = "Model loaded now you can start upload photos";
+
+    imageUpload.addEventListener('change', async () => {
+        if (image) image.remove()
+        image = await faceapi.bufferToImage(imageUpload.files[0])
+        
+        const detections = await faceapi.detectAllFaces(image).withFaceLandmarks().withFaceDescriptors()
+        const resizedDetections = faceapi.resizeResults(detections, image)
+        const results = resizedDetections.map(d => faceMatcher.findBestMatch(d.descriptor))
+        const queryParams = getQueryParams(queryString);
+        const key = queryParams['key'];
+        postData(results, key);
+
+        // Display label results to the user
+        const resultLabels = results.map(result => result.label);
+        message.innerText = "Labels Detected: " + resultLabels.join(', ');
+    })
 }
+
 
 function loadLabeledImages() {
 
@@ -76,26 +67,25 @@ const getQueryParams = (queryString) => {
 
 function postData(results, key) {
     const currentURL = window.location.href;
-
     const domain = new URL(currentURL).hostname;
-    console.log(currentURL,domain)
-  const url = 'staffs/get_result/';
-  const labels = results.map(result => result.label); // Extract labels from results
-  console.log(labels);
-  $.ajax({
-    url: url,
-    type: 'POST',
-    contentType: 'application/json',
-    data: JSON.stringify({ "key": key, "labels": labels }), // Include key and labels in the JSON payload
-    success: function(response) {
-      console.log('Success:', response);
-      window.reload()
-    },
-    error: function(error) {
-      console.error('Error:', error);
-    }
-  });
+    const path = '/staffs/get_result/'; // Specify the path
+    const url = '//' + domain + path; // Construct the complete URL using the domain and path
+    const labels = results.map(result => result.label); // Extract labels from results
+    console.log(labels);
+    $.ajax({
+        url: url,
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({ "key": key, "labels": labels }), // Include key and labels in the JSON payload
+        success: function(response) {
+            console.log('Success:', response);
+        },
+        error: function(error) {
+            console.error('Error:', error);
+        }
+    });
 }
+
 
 
 
