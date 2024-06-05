@@ -33,7 +33,7 @@ async function start() {
 
 function loadLabeledImages() {
 
-  const labels = ['2238010017','2238010042','2238010058','2238010080']
+  const labels = ['2238010017','2238010042','2238010058','2238010080','2238010007','22380006']
   return Promise.all(
     labels.map(async label => {
       const descriptions = []
